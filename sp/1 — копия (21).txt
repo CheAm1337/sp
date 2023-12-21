@@ -1,0 +1,22 @@
+ЭКЗАМЕНАЦИОННЫЙ БИЛЕТ №22
+
+
+Вопросы: Что можно задать в качестве списка значений для for (bash)? Цифры, строки, переменные, диапазоны чисел.
+
+Для чего нужен IFS? Управляет разделителями полей при чтении строк.
+
+Для чего нужны функции? Группируют код, облегчая его повторное использование и обслуживание.
+
+Практическое задание:
+Зайдите в rescue.target, посмотрите содержимое fstab, после чего вернитесь в graphical.target. Сделайте multi-user.target режимом по умолчанию. 
+Зайти в rescue.target:
+sudo systemctl isolate rescue.target
+
+Посмотреть содержимое fstab:
+cat /etc/fstab
+
+Вернуться в graphical.target:
+sudo systemctl isolate graphical.target
+
+Сделать multi-user.target режимом по умолчанию:
+sudo systemctl set-default multi-user.target

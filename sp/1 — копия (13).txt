@@ -1,0 +1,28 @@
+ЭКЗАМЕНАЦИОННЫЙ БИЛЕТ №14
+
+
+Вопросы: Объясните эту запись: ALL=(ALL:ALL) ALL. Какими способами можно дать пользователю «права администратора», какой способ лучше и почему? Чем отличается su user от su - user?
+ALL=(ALL:ALL) ALL:
+Пользователь может использовать sudo для выполнения любых команд от имени любого пользователя и группы.
+
+Права администратора:
+Дать пользователю sudo-права в файле /etc/sudoers или добавить его в группу sudo.
+usermod -aG sudo username
+
+Отличие между su user и su - user:
+su user: Переключение пользователя без изменения окружения.
+su - user: Переключение пользователя с изменением окружения.
+
+Практическое задание:
+Создайте raid1 из двух разделов на разных дисках, добавьте 1 любой файл в raid (предварительно настроив файловую систему) Выключите виртуалку, удалите один из дисков, добавьте новый диск и восстановите рейд с помощью этого диска.
+sudo mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1
+sudo mkfs.ext4 /dev/md0
+sudo mkdir /mnt/myraid
+sudo mount /dev/md0 /mnt/myriad
+echo "Hello RAID1" | sudo tee /mnt/myraid/myfile.txt
+sudo mdadm --manage /dev/md0 --add /dev/sdc
+cat /proc/mdstat
+sudo mdadm --detail /dev/md0
+sudo mount /dev/md0 /mnt/myriad
+cat /mnt/myraid/myfile.txt
+ 

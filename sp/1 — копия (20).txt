@@ -1,0 +1,31 @@
+ЭКЗАМЕНАЦИОННЫЙ БИЛЕТ №21
+
+
+Вопросы: Какой синтаксис у команды if (bash)? if условие; then код на другой строке
+Else код на другой строке
+fi
+Как узнать код выхода предыдущей команды? $?
+Почему стоит переменную брать в кавычки при использовании [] ? Для безопасной обработки значений переменных с пробелами и спецсимволами.
+
+Практическое задание:
+Bash script. Создайте пользователей – helpdesk и backup. Разрешите пользователю helpdesk запускать команду newbackup от имени пользователя backup. Команда newbackup должна создавать сжатый архив директории /data и сохранять его в домашней директории пользователя backup с датой в названии.
+sudo useradd -m backup
+sudo useradd -m helpdesk
+sudo tee /path/to/newbackup <<EOF
+nano название.sh
+код
+# Проверяем наличие директории /data
+if [ ! -d "/data" ]; then
+  echo "Директория /data не существует."
+  exit 1
+fi
+# Формируем имя архива с датой
+backup_filename="/home/backup/backup_$(date +%Y-%m-%d).tar.gz"
+# Создаем сжатый архив директории /data
+tar -czvf "\$backup_filename" /data
+echo "Backup успешно создан: \$backup_filename"
+EOF
+sudo chmod +x /path/to/newbackup
+echo "helpdesk ALL=(backup) NOPASSWD: /path/to/newbackup" | sudo tee -a /etc/sudoers
+
+

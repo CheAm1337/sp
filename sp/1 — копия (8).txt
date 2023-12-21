@@ -1,0 +1,41 @@
+ЭКЗАМЕНАЦИОННЫЙ БИЛЕТ №9
+
+
+Вопросы: Какими способами можно посмотреть 30 строчку файла /etc/passwd? Какое преимущество дают head и tail при чтении больших файлов? Каким удобным способом можно смотреть изменяющийся файл?
+1.	sed -n 30p /etc/passwd
+2.	head – первые tail - последние
+3.	watch -n 1 'cat filename'
+
+Практическое задание:
+ Создайте три группы – marketing, sales и it. Для каждой группы создайте директорию внутри /home, а также по два пользователя - user.marketing, manager.marketing, user.sales, manager.sales, admin и helpdesk. Группы для пользователей должны быть основными. manager-ы должны иметь возможность залогиниться, а юзеры нет. У manager-ов должна быть своя домашняя директория, а для user-ов домашней директорией должна выступать директория группы.
+создание групп
+sudo groupadd marketing
+sudo groupadd sales
+sudo groupadd it
+директирии
+sudo mkdir /home/marketing
+sudo mkdir /home/sales
+sudo mkdir /home/it
+пользователи
+sudo useradd -m -d /home/marketing/user.marketing -g marketing user.marketing -s /sbin/nologin
+sudo useradd -m -d /home/marketing/manager.marketing -g marketing manager.marketing -s /bin/bash
+
+sudo useradd -m -d /home/sales/user.sales -g sales user.sales -s /sbin/nologin
+sudo useradd -m -d /home/sales/manager.sales -g sales manager.sales -s /bin/bash
+
+sudo useradd -m -d /home/it/admin -g it admin -s /sbin/nologin
+sudo useradd -m -d /home/it/helpdesk -g it helpdesk -s /sbin/nologin
+права на директории
+sudo chown :marketing /home/marketing/user.marketing /home/marketing/manager.marketing
+sudo chown :sales /home/sales/user.sales /home/sales/manager.sales
+sudo chown :it /home/it/admin /home/it/helpdesk
+sudo chown :marketing /home/marketing
+sudo chown :sales /home/sales
+sudo chown :it /home/it
+права на вход
+sudo usermod -s /bin/bash manager.marketing
+sudo usermod -s /bin/bash manager.sales
+
+
+
+
